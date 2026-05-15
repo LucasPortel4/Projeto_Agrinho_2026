@@ -88,14 +88,6 @@ ecoagro-monitor/
 - ✅ iOS (Safari, Chrome)
 - ✅ Android (Chrome, Firefox)
 
----
-
-## 🌐 Publicar no GitHub Pages
-
-1. Crie um repositório no GitHub
-2. Faça upload de todos os arquivos
-3. Vá em **Settings → Pages → Source: main branch**
-4. Seu site estará em: `https://seu-usuario.github.io/ecoagro-monitor`
 
 ---
 

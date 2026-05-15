@@ -37,10 +37,10 @@
           <a href="#catalogo" class="navbar__nav-link active" aria-current="page">Catálogo</a>
         </li>
         <li>
-          <a href="#sobre" class="navbar__nav-link">Sobre</a>
+          <a href="/ecoagro-monitor/index.html" class="navbar__nav-link">EcoAgro Monitor</a>
         </li>
         <li>
-          <a href="#contato" class="navbar__nav-link">Contato</a>
+          <a href="#contato" class="navbar__nav-link"></a>
         </li>
       </ul>
 
@@ -89,8 +89,8 @@
 
 
         <!-- ======================================================
-             CARD 1 — Aventura Pixel
-             Jogo de plataforma com HUD de vidas e moedas
+             CARD 1 — Click Game
+             Jogo de clique com HUD de galinhas e ovos
              ====================================================== -->
         <article class="game-card" aria-labelledby="card1-title">
 
@@ -99,20 +99,20 @@
             <!-- Imagem gerada por gradiente + SVG para simular pixel art -->
             <img
               src="/gamebase/assets/imagens/capa-clickgame.png"
-              alt="Capa do jogo Aventura Pixel: cenário de plataforma colorido"
+              alt="Capa do jogo Click Game: cenário de plataforma colorido"
               loading="lazy"
             />
 
-            <!-- HUD: vidas (corações) e moedas coletadas -->
+            <!-- HUD: vidas (galinhas) e ovos coletados -->
             <div class="game-card__hud" aria-label="Informações de jogo">
-              <!-- Lado esquerdo: corações de vida -->
+              <!-- Lado esquerdo: galinhas de vida -->
               <div class="hud-item">
-                <div class="hud-item__icons" aria-label="3 vidas restantes">
+                <div class="hud-item__icons" aria-label="3 galinhas restantes">
                   🐓🐓🐓
                 </div>
               </div>
 
-              <!-- Lado direito: contagem de moedas -->
+              <!-- Lado direito: contagem de ovos -->
               <div class="hud-item hud-item--right">
                 <span class="hud-item__label">Ovos</span>
                 <span class="hud-item__value">🥚🥚🥚</span>
@@ -143,35 +143,24 @@
 
           <div class="game-card__cover">
             <img
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80"
-              alt="Capa do jogo Velocidade Máxima: carro esportivo em pista iluminada"
+              src="/gamebase/assets/imagens/Fazenda-Feliz.png"
+              alt="Capa do jogo Fazenda Feliz"
               loading="lazy"
             />
 
             <!-- HUD: posição na corrida e volta atual -->
             <div class="game-card__hud" aria-label="Informações de jogo">
-              <!-- Posição: 1º de 8 -->
-              <div class="hud-item">
-                <span class="hud-item__label">POS</span>
-                <span class="hud-item__value">1/8</span>
-              </div>
-
-              <!-- Volta atual: 2 de 3 -->
-              <div class="hud-item hud-item--right">
-                <span class="hud-item__label">VOLTA</span>
-                <span class="hud-item__value">2/3</span>
-              </div>
             </div>
           </div>
 
           <div class="game-card__body">
-            <h2 class="game-card__title" id="card2-title">Velocidade Máxima</h2>
-            <span class="game-card__genre">Corrida</span>
+            <h2 class="game-card__title" id="card2-title">Fazenda Feliz</h2>
+            <span class="game-card__genre">Fazenda</span>
             <p class="game-card__description">
-              Acelere em pistas incríveis e seja o campeão das ruas.
+              Melhore sua fazenda, plante e colha para se tornar o fazendeiro mais feliz!
             </p>
-            <button class="game-card__btn" aria-label="Ver detalhes de Velocidade Máxima">
-              Ver detalhes
+            <button class="game-card__btn" aria-label="Jogar Fazenda Feliz">
+                <a href="https://play.google.com/store/apps/details?id=com.funplus.familyfarmtango&hl=pt_BR" target="_blank">Jogar</a>
             </button>
           </div>
         </article>
@@ -185,37 +174,36 @@
 
           <div class="game-card__cover">
             <img
-              src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=500&q=80"
-              alt="Capa do jogo Galáxia Attack: naves espaciais em batalha"
+              src="/gamebase/assets/imagens/Hay-day.png"
+              alt="Capa do jogo Hay Day: fazenda colorida"
               loading="lazy"
             />
 
-            <!-- HUD: pontuação e vidas restantes -->
             <div class="game-card__hud" aria-label="Informações de jogo">
-              <!-- Score atual -->
+    
               <div class="hud-item">
-                <span class="hud-item__label">SCORE</span>
-                <span class="hud-item__value">1.250</span>
+                <span class="hud-item__label"></span>
+                <span class="hud-item__value"></span>
               </div>
-
-              <!-- Vidas: 3 naves restantes -->
+              
               <div class="hud-item hud-item--right">
-                <span class="hud-item__label">LIVES</span>
-                <div class="hud-item__icons" aria-label="3 vidas restantes">
-                  🚀🚀🚀
+                <span class="hud-item__label"></span>
+                <div class="hud-item__icons" aria-label="3 trigos">
+                  🌾🌾🌾
                 </div>
               </div>
             </div>
           </div>
 
           <div class="game-card__body">
-            <h2 class="game-card__title" id="card3-title">Galáxia Attack</h2>
+            <h2 class="game-card__title" id="card3-title">Hay Day</h2>
             <span class="game-card__genre">Tiro</span>
             <p class="game-card__description">
-              Defenda a galáxia de ondas de inimigos em batalhas intensas.
+              Construa sua fazenda dos sonhos, plante, colha e crie animais para prosperar!
             </p>
-            <button class="game-card__btn" aria-label="Ver detalhes de Galáxia Attack">
-              Ver detalhes
+            <button class="game-card__btn" aria-label="Ver detalhes de Hay Day">
+                 <a href="https://play.google.com/store/apps/details?id=com.supercell.hayday&hl=pt_BR" target="_blank">jogar</a>
+                  
             </button>
           </div>
         </article>

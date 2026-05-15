@@ -1,13 +1,25 @@
 /**
  * src/ui/ui.js
  * Módulo principal de renderização da interface.
- * Atualiza todos os elementos DOM com os valores atuais do estado.
- * Renderiza a loja de upgrades e a aba de conquistas.
+ *
+ * ARQUITETURA (após correção de bugs):
+ * ─────────────────────────────────────
+ * • renderShop()  → chamado UMA VEZ no init (e no reset).
+ *                   Constrói os botões e registra delegação de eventos no container.
+ *
+ * • update()      → chamado a cada clique e a cada tick do loop.
+ *                   Atualiza APENAS textos/contadores e o estado disabled dos botões.
+ *                   NÃO reconstrói o DOM — preserva os event listeners.
+ *
+ * Por que delegação de eventos?
+ *   Registrar addEventListener em cada botão e depois limpar innerHTML
+ *   destruía os listeners, impedindo compras múltiplas do mesmo upgrade.
+ *   Com delegação, um único listener no container pai funciona para sempre.
  */
 
 const UI = (() => {
 
-  // Referências aos elementos DOM (cacheadas para performance)
+  // ── Referências DOM cacheadas ─────────────────────────────────────────────
   const _els = {
     eggCount:    document.getElementById('egg-count'),
     headerEggs:  document.getElementById('header-eggs'),
@@ -22,13 +34,37 @@ const UI = (() => {
     tabMilest:   document.getElementById('tab-milestones'),
   };
 
+  /** Controla se a delegação de eventos da loja já foi registrada */
+  let _delegationBound = false;
+
+  // ── API pública ───────────────────────────────────────────────────────────
+
   /**
-   * Atualiza todos os contadores e textos de estatísticas na tela.
-   * Deve ser chamado após qualquer mudança de estado.
+   * Constrói a loja do zero e (na primeira vez) registra a delegação de eventos.
+   * Deve ser chamado apenas no init e após reset — não a cada tick.
+   */
+  function renderShop() {
+    _buildUpgradeButtons();
+    _buildMilestones();
+
+    // Registra a delegação de clique no container UMA única vez.
+    // Na segunda chamada (reset), os botões são recriados mas o listener
+    // já existe no container e continua funcionando normalmente.
+    if (!_delegationBound) {
+      _bindShopDelegation();
+      _delegationBound = true;
+    }
+  }
+
+  /**
+   * Atualiza contadores, stats e estado dos botões da loja.
+   * Chamado a cada clique e a cada tick de produção automática.
+   * NÃO reconstrói o DOM para não destruir event listeners.
    */
   function update() {
     const s = State.get();
 
+    // Atualiza contadores de ovos e stats
     _els.eggCount.textContent   = Formatter.formatNumber(s.eggs);
     _els.headerEggs.textContent = Formatter.formatNumber(s.eggs);
     _els.statTotal.textContent  = Formatter.formatNumber(s.totalEggs);
@@ -39,29 +75,58 @@ const UI = (() => {
     _els.epsLabel.textContent   = `${Formatter.formatEPS(s.eggsPerSecond)} ovos por segundo`;
     _els.statLevel.textContent  = Levels.getLevel(s.totalEggs);
 
-    _renderUpgrades();
-    _renderMilestones();
+    // Atualiza disabled/custo/owned dos botões sem recriar o DOM
+    _refreshUpgradeButtons();
+
+    // Verifica e notifica conquistas novas
     _checkMilestones(s);
   }
 
   /**
-   * Renderiza (ou re-renderiza) a lista de botões de upgrade na loja.
-   * Desabilita botões cujo custo excede os ovos disponíveis.
+   * Troca a aba ativa entre "Melhorias" e "Conquistas".
+   * @param {string} tabName    - 'upgrades' ou 'milestones'
+   * @param {HTMLElement} clickedBtn - Botão de aba que foi clicado
    */
-  function _renderUpgrades() {
-    const s = State.get();
+  function switchTab(tabName, clickedBtn) {
+    document.querySelectorAll('.tab-content').forEach((t) =>
+      t.classList.remove('tab-content--active')
+    );
+    document.querySelectorAll('.tab-btn').forEach((b) => {
+      b.classList.remove('tab-btn--active');
+      b.setAttribute('aria-selected', 'false');
+    });
+
+    document.getElementById(`tab-${tabName}`).classList.add('tab-content--active');
+    clickedBtn.classList.add('tab-btn--active');
+    clickedBtn.setAttribute('aria-selected', 'true');
+  }
+
+  // ── Funções privadas ──────────────────────────────────────────────────────
+
+  /**
+   * Cria todos os botões de upgrade no container da loja.
+   * Cada botão recebe `data-index` para identificação pela delegação de eventos.
+   * Sub-elementos com `data-cost` e `data-owned` são alvos de atualização incremental.
+   */
+  function _buildUpgradeButtons() {
+    const s       = State.get();
     const catalog = Shop.getCatalog();
 
     _els.tabUpgrades.innerHTML = '';
 
     catalog.forEach((upgrade, index) => {
-      const cost = Shop.getCurrentCost(upgrade);
+      const cost      = Shop.getCurrentCost(upgrade);
       const canAfford = s.eggs >= cost;
 
       const btn = document.createElement('button');
       btn.className = 'upgrade-btn';
-      btn.disabled = !canAfford;
-      btn.setAttribute('aria-label', `Comprar ${upgrade.name} por ${Formatter.formatNumber(cost)} ovos`);
+      btn.disabled  = !canAfford;
+      // data-index: lido pela delegação para saber qual upgrade comprar
+      btn.dataset.index = String(index);
+      btn.setAttribute(
+        'aria-label',
+        `Comprar ${upgrade.name} por ${Formatter.formatNumber(cost)} ovos`
+      );
 
       btn.innerHTML = `
         <span class="upgrade-btn__icon" aria-hidden="true">${upgrade.icon}</span>
@@ -69,37 +134,94 @@ const UI = (() => {
           <div class="upgrade-btn__name">${upgrade.name}</div>
           <div class="upgrade-btn__desc" title="${upgrade.desc}">${upgrade.desc}</div>
         </div>
-        <div class="upgrade-btn__cost">🥚 ${Formatter.formatNumber(cost)}</div>
-        ${upgrade.owned > 0 ? `<div class="upgrade-btn__owned">x${upgrade.owned}</div>` : ''}
+        <span class="upgrade-btn__cost" data-cost>🥚 ${Formatter.formatNumber(cost)}</span>
+        <span class="upgrade-btn__owned" data-owned
+              style="display:${upgrade.owned > 0 ? 'inline-block' : 'none'}">
+          x${upgrade.owned}
+        </span>
       `;
-
-      // Ao clicar: tenta comprar e atualiza UI
-      btn.addEventListener('click', () => {
-        const ok = Shop.buy(index);
-        if (ok) {
-          Notification.show(`${upgrade.icon} ${upgrade.name} comprado!`);
-          update();
-        }
-      });
 
       _els.tabUpgrades.appendChild(btn);
     });
   }
 
   /**
-   * Renderiza a lista de conquistas na aba "Conquistas".
-   * Conquistas desbloqueadas aparecem destacadas; bloqueadas ficam acinzentadas.
+   * Registra um único listener de clique no container da loja (delegação de eventos).
+   * O listener persiste mesmo quando os botões filhos são recriados.
+   * Usa `e.target.closest('[data-index]')` para encontrar o botão correto
+   * independente de qual elemento filho foi clicado (ícone, texto, etc.).
    */
-  function _renderMilestones() {
-    const s = State.get();
+  function _bindShopDelegation() {
+    _els.tabUpgrades.addEventListener('click', (e) => {
+      // Sobe na árvore DOM até encontrar um botão com data-index
+      const btn = e.target.closest('[data-index]');
+      if (!btn || btn.disabled) return;
+
+      const index   = parseInt(btn.dataset.index, 10);
+      const catalog = Shop.getCatalog();
+      const upgrade = catalog[index];
+      if (!upgrade) return;
+
+      // Tenta efetuar a compra
+      const ok = Shop.buy(index);
+      if (ok) {
+        Notification.show(`${upgrade.icon} ${upgrade.name} comprado!`);
+        // Atualiza os botões e stats sem recriar o DOM
+        _refreshUpgradeButtons();
+        update();
+      }
+    });
+  }
+
+  /**
+   * Percorre os botões já existentes na loja e atualiza apenas:
+   *   - atributo `disabled` (pode ou não comprar)
+   *   - texto do custo atual (sobe a cada compra)
+   *   - badge de quantidade comprada
+   * Não toca na estrutura do DOM — preserva todos os event listeners.
+   */
+  function _refreshUpgradeButtons() {
+    const s       = State.get();
+    const catalog = Shop.getCatalog();
+    const buttons = _els.tabUpgrades.querySelectorAll('.upgrade-btn');
+
+    buttons.forEach((btn) => {
+      const index   = parseInt(btn.dataset.index, 10);
+      const upgrade = catalog[index];
+      if (!upgrade) return;
+
+      const cost = Shop.getCurrentCost(upgrade);
+
+      // Habilita/desabilita conforme saldo atual
+      btn.disabled = s.eggs < cost;
+
+      // Atualiza custo exibido
+      const costEl = btn.querySelector('[data-cost]');
+      if (costEl) costEl.textContent = `🥚 ${Formatter.formatNumber(cost)}`;
+
+      // Atualiza badge de quantidade comprada
+      const ownedEl = btn.querySelector('[data-owned]');
+      if (ownedEl) {
+        ownedEl.textContent    = `x${upgrade.owned}`;
+        ownedEl.style.display  = upgrade.owned > 0 ? 'inline-block' : 'none';
+      }
+    });
+  }
+
+  /**
+   * Cria os cards de conquistas na aba "Conquistas".
+   * Cada card recebe `data-name` para atualização visual futura sem recriar o DOM.
+   */
+  function _buildMilestones() {
+    const s   = State.get();
     const all = Milestones.getAll(s);
 
     _els.tabMilest.innerHTML = '';
 
     all.forEach(({ milestone, unlocked }) => {
       const div = document.createElement('div');
-      div.className = `milestone${unlocked ? '' : ' milestone--locked'}`;
-      div.setAttribute('aria-label', `${milestone.name}: ${unlocked ? 'desbloqueada' : 'bloqueada'}`);
+      div.className    = `milestone${unlocked ? '' : ' milestone--locked'}`;
+      div.dataset.name = milestone.name;
 
       div.innerHTML = `
         <span class="milestone__icon" aria-hidden="true">${milestone.icon}</span>
@@ -114,35 +236,21 @@ const UI = (() => {
   }
 
   /**
-   * Verifica conquistas recém-desbloqueadas e exibe notificações.
-   * @param {Object} state - Estado atual do jogo.
+   * Verifica conquistas recém-desbloqueadas, exibe notificação
+   * e remove a classe `milestone--locked` do card correspondente.
+   * @param {Object} state - Estado atual do jogo
    */
   function _checkMilestones(state) {
     const newOnes = Milestones.checkNew(state);
     newOnes.forEach((m) => {
       Notification.show(`🏆 Conquista: ${m.name}!`, 3000);
+
+      // Atualiza visualmente o card sem recriar o DOM
+      const el = _els.tabMilest.querySelector(`[data-name="${m.name}"]`);
+      if (el) el.classList.remove('milestone--locked');
     });
   }
 
-  /**
-   * Troca a aba ativa entre "Melhorias" e "Conquistas".
-   * @param {string} tabName - 'upgrades' ou 'milestones'.
-   * @param {HTMLElement} clickedBtn - O botão de aba clicado.
-   */
-  function switchTab(tabName, clickedBtn) {
-    // Remove estado ativo de todos os conteúdos e botões de aba
-    document.querySelectorAll('.tab-content').forEach((t) => t.classList.remove('tab-content--active'));
-    document.querySelectorAll('.tab-btn').forEach((b) => {
-      b.classList.remove('tab-btn--active');
-      b.setAttribute('aria-selected', 'false');
-    });
-
-    // Ativa o conteúdo e botão selecionados
-    document.getElementById(`tab-${tabName}`).classList.add('tab-content--active');
-    clickedBtn.classList.add('tab-btn--active');
-    clickedBtn.setAttribute('aria-selected', 'true');
-  }
-
-  return { update, switchTab };
+  return { renderShop, update, switchTab };
 
 })();
