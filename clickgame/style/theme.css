@@ -1,0 +1,44 @@
+/*
+ * theme.css
+ * Define todas as variáveis de design (cores, fontes, sombras).
+ * Centralizar aqui permite trocar o tema do jogo facilmente.
+ */
+
+:root {
+  /* === CORES PRINCIPAIS === */
+  --bg:           #fdf3dc;
+  --bg2:          #fde8b0;
+  --panel:        #fffbe8;
+  --border:       #e8c96a;
+  --accent:       #e8a020;
+  --accent2:      #d45f00;
+  --accent-dark:  #a03800;
+  --green:        #4caf50;
+  --green-dark:   #2e7d32;
+  --text:         #3b2000;
+  --text-muted:   #7a5500;
+  --text-light:   #aaa;
+  --white:        #ffffff;
+  --shadow:       rgba(200, 140, 0, 0.18);
+  --shadow-btn:   rgba(200, 80, 0, 0.3);
+  --danger:       #e53935;
+
+  /* === TIPOGRAFIA === */
+  --font-display: 'Fredoka One', 'Baloo 2', cursive;
+  --font-body:    'Nunito', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+
+  /* === BORDAS === */
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --radius-pill:  999px;
+
+  /* === TRANSIÇÕES === */
+  --transition:   0.15s ease;
+  --transition-slow: 0.3s ease;
+
+  /* === ESPAÇAMENTOS === */
+  --gap-sm:   8px;
+  --gap-md:   14px;
+  --gap-lg:   20px;
+}

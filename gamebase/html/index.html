@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <!-- ============================================================
+       META TAGS E CONFIGURAÇÕES GERAIS
+       Define encoding, responsividade e título da aba
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GameBase – Descubra e explore nossos jogos incríveis" />
+  <title>GameBase – Catálogo de Jogos</title>
+
+  <!-- Importa o arquivo CSS separado (pasta css/) -->
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       BARRA DE NAVEGAÇÃO SUPERIOR
+       Contém: logo, menu de links e campo de busca
+       ============================================================ -->
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Menu principal">
+
+      <!-- Logo com ícone e nome da marca -->
+      <a href="#" class="navbar__logo" aria-label="GameBase – Página inicial">
+        <span class="navbar__logo-icon">🎮</span>
+        <span class="navbar__logo-text">Game<span>Base</span></span>
+      </a>
+
+      <!-- Links de navegação principal -->
+      <ul class="navbar__nav" role="list">
+        <li>
+          <!-- Link ativo indica a página atual -->
+          <a href="#catalogo" class="navbar__nav-link active" aria-current="page">Catálogo</a>
+        </li>
+        <li>
+          <a href="#sobre" class="navbar__nav-link">Sobre</a>
+        </li>
+        <li>
+          <a href="#contato" class="navbar__nav-link">Contato</a>
+        </li>
+      </ul>
+
+      <!-- Campo de busca com ícone decorativo -->
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input
+          class="navbar__search-input"
+          type="search"
+          placeholder="Buscar jogos..."
+          aria-label="Buscar jogos"
+        />
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+       Agrupa a seção hero e o catálogo de jogos
+       ============================================================ -->
+  <main id="catalogo">
+
+    <!-- ----------------------------------------------------------
+         SEÇÃO HERO
+         Título, subtítulo e divisória decorativa do catálogo
+         ---------------------------------------------------------- -->
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 class="hero__title" id="hero-title">Catálogo de Jogos</h1>
+      <p class="hero__subtitle">Descubra e explore nossos jogos incríveis</p>
+
+      <!-- Divisória com ícone central decorativo -->
+      <div class="hero__divider" aria-hidden="true">
+        <span class="hero__divider-icon">🎮</span>
+      </div>
+    </section>
+
+
+    <!-- ----------------------------------------------------------
+         GRADE DE JOGOS (CATALOG GRID)
+         Lista de cards com informações de cada jogo disponível
+         ---------------------------------------------------------- -->
+    <section class="catalog" aria-label="Lista de jogos">
+      <div class="catalog__grid">
+
+
+        <!-- ======================================================
+             CARD 1 — Aventura Pixel
+             Jogo de plataforma com HUD de vidas e moedas
+             ====================================================== -->
+        <article class="game-card" aria-labelledby="card1-title">
+
+          <!-- Capa do jogo com HUD sobreposto -->
+          <div class="game-card__cover">
+            <!-- Imagem gerada por gradiente + SVG para simular pixel art -->
+            <img
+              src="/gamebase/assets/imagens/capa-clickgame.png"
+              alt="Capa do jogo Aventura Pixel: cenário de plataforma colorido"
+              loading="lazy"
+            />
+
+            <!-- HUD: vidas (corações) e moedas coletadas -->
+            <div class="game-card__hud" aria-label="Informações de jogo">
+              <!-- Lado esquerdo: corações de vida -->
+              <div class="hud-item">
+                <div class="hud-item__icons" aria-label="3 vidas restantes">
+                  🐓🐓🐓
+                </div>
+              </div>
+
+              <!-- Lado direito: contagem de moedas -->
+              <div class="hud-item hud-item--right">
+                <span class="hud-item__label">Ovos</span>
+                <span class="hud-item__value">🥚🥚🥚</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações textuais do card -->
+          <div class="game-card__body">
+            <h2 class="game-card__title" id="card1-title">Click Game</h2>
+            <span class="game-card__genre">Click</span>
+            <p class="game-card__description">
+              Um jogo de clique classico, porem viciante.
+            </p>
+            <!-- Botão de ação para jogar -->
+            
+             <a href="/clickgame/index.html" class="game-card__btn" target="_blank">Jogar</a>
+           
+          </div>
+        </article>
+
+
+        <!-- ======================================================
+             CARD 2 — Velocidade Máxima
+             Jogo de corrida com HUD de posição e velocidade
+             ====================================================== -->
+        <article class="game-card" aria-labelledby="card2-title">
+
+          <div class="game-card__cover">
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80"
+              alt="Capa do jogo Velocidade Máxima: carro esportivo em pista iluminada"
+              loading="lazy"
+            />
+
+            <!-- HUD: posição na corrida e volta atual -->
+            <div class="game-card__hud" aria-label="Informações de jogo">
+              <!-- Posição: 1º de 8 -->
+              <div class="hud-item">
+                <span class="hud-item__label">POS</span>
+                <span class="hud-item__value">1/8</span>
+              </div>
+
+              <!-- Volta atual: 2 de 3 -->
+              <div class="hud-item hud-item--right">
+                <span class="hud-item__label">VOLTA</span>
+                <span class="hud-item__value">2/3</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card__body">
+            <h2 class="game-card__title" id="card2-title">Velocidade Máxima</h2>
+            <span class="game-card__genre">Corrida</span>
+            <p class="game-card__description">
+              Acelere em pistas incríveis e seja o campeão das ruas.
+            </p>
+            <button class="game-card__btn" aria-label="Ver detalhes de Velocidade Máxima">
+              Ver detalhes
+            </button>
+          </div>
+        </article>
+
+
+        <!-- ======================================================
+             CARD 3 — Galáxia Attack
+             Jogo de tiro espacial com HUD de score e vidas
+             ====================================================== -->
+        <article class="game-card" aria-labelledby="card3-title">
+
+          <div class="game-card__cover">
+            <img
+              src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=500&q=80"
+              alt="Capa do jogo Galáxia Attack: naves espaciais em batalha"
+              loading="lazy"
+            />
+
+            <!-- HUD: pontuação e vidas restantes -->
+            <div class="game-card__hud" aria-label="Informações de jogo">
+              <!-- Score atual -->
+              <div class="hud-item">
+                <span class="hud-item__label">SCORE</span>
+                <span class="hud-item__value">1.250</span>
+              </div>
+
+              <!-- Vidas: 3 naves restantes -->
+              <div class="hud-item hud-item--right">
+                <span class="hud-item__label">LIVES</span>
+                <div class="hud-item__icons" aria-label="3 vidas restantes">
+                  🚀🚀🚀
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card__body">
+            <h2 class="game-card__title" id="card3-title">Galáxia Attack</h2>
+            <span class="game-card__genre">Tiro</span>
+            <p class="game-card__description">
+              Defenda a galáxia de ondas de inimigos em batalhas intensas.
+            </p>
+            <button class="game-card__btn" aria-label="Ver detalhes de Galáxia Attack">
+              Ver detalhes
+            </button>
+          </div>
+        </article>
+
+
+      </div><!-- /.catalog__grid -->
+    </section><!-- /.catalog -->
+
+
+    <!-- ----------------------------------------------------------
+         PAGINAÇÃO
+         Navegação entre páginas do catálogo
+         ---------------------------------------------------------- -->
+    <nav class="pagination" aria-label="Navegação de páginas">
+
+      <!-- Página 1 – ativa no momento -->
+      <button class="pagination__btn active" aria-label="Página 1" aria-current="page">
+        1
+      </button>
+
+      <!-- Páginas seguintes -->
+      <button class="pagination__btn" aria-label="Página 2">2</button>
+      <button class="pagination__btn" aria-label="Página 3">3</button>
+
+      <!-- Botão de avançar para a próxima página -->
+      <button class="pagination__btn" aria-label="Próxima página">›</button>
+
+    </nav>
+
+  </main><!-- /main -->
+
+
+  <!-- ============================================================
+       SCRIPT INLINE
+       Lógica de interatividade: busca, paginação e botões
+       ============================================================ -->
+  <script>
+    /**
+     * Inicializa todos os comportamentos interativos da página
+     * ao terminar de carregar o DOM.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /**
+       * BUSCA EM TEMPO REAL
+       * Filtra os cards visíveis conforme o texto digitado no campo de busca.
+       * Compara o título e o gênero de cada card com o termo buscado.
+       */
+      const searchInput = document.querySelector('.navbar__search-input');
+      const gameCards   = document.querySelectorAll('.game-card');
+
+      searchInput.addEventListener('input', () => {
+        const termo = searchInput.value.toLowerCase().trim();
+
+        gameCards.forEach(card => {
+          const titulo = card.querySelector('.game-card__title').textContent.toLowerCase();
+          const genero = card.querySelector('.game-card__genre').textContent.toLowerCase();
+
+          // Mostra o card se o título ou gênero bater com o termo
+          const visivel = titulo.includes(termo) || genero.includes(termo);
+          card.style.display = visivel ? '' : 'none';
+        });
+      });
+
+
+      /**
+       * PAGINAÇÃO INTERATIVA
+       * Marca o botão clicado como ativo e remove o destaque dos demais.
+       * Em um projeto real, aqui buscaria a página correspondente do servidor.
+       */
+      const paginationBtns = document.querySelectorAll('.pagination__btn');
+
+      paginationBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove estado ativo de todos
+          paginationBtns.forEach(b => {
+            b.classList.remove('active');
+            b.removeAttribute('aria-current');
+          });
+
+          // Aplica estado ativo no botão clicado (exceto "próxima")
+          if (btn.textContent !== '›') {
+            btn.classList.add('active');
+            btn.setAttribute('aria-current', 'page');
+          }
+        });
+      });
+
+
+      /**
+       * BOTÕES "VER DETALHES"
+       * Exibe um alerta simples ao clicar no botão de cada jogo.
+       * Em produção, aqui redirecionaria para a página de detalhes do jogo.
+       */
+      const detailBtns = document.querySelectorAll('.game-card__btn');
+
+      detailBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const titulo = btn.closest('.game-card')
+                            .querySelector('.game-card__title')
+                            .textContent;
+          alert(`🎮 Abrindo detalhes de: ${titulo}`);
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>

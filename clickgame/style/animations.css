@@ -1,0 +1,73 @@
+/*
+ * animations.css
+ * Todas as animações e keyframes do jogo.
+ * Usa `prefers-reduced-motion` para acessibilidade (usuários com epilepsia, etc.).
+ */
+
+/* === GALINHA: animação de "squawk" ao clicar === */
+@keyframes squawk {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.13) rotate(-10deg); }
+  60%  { transform: scale(0.93) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.chicken-btn--squawk {
+  animation: squawk 0.2s ease;
+}
+
+/* === ANEL DE PULSO ao clicar === */
+@keyframes pulse-out {
+  0%   { transform: scale(0.7); opacity: 0.7; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+
+.pulse-ring--go {
+  animation: pulse-out 0.5s ease-out forwards;
+}
+
+/* === TEXTO FLUTUANTE (ovos ganhos) === */
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  75%  { opacity: 1; }
+  100% { transform: translateY(-85px) scale(1.25); opacity: 0; }
+}
+
+.float-text {
+  animation: float-up 0.9s ease-out forwards;
+}
+
+/* === ENTRADA DE CARDS (fade + slide) === */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.3s ease forwards;
+}
+
+/* === CONQUISTA DESBLOQUEADA === */
+@keyframes pop-in {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.milestone--unlocked-anim {
+  animation: pop-in 0.4s ease forwards;
+}
+
+/*
+ * ACESSIBILIDADE: desativa todas as animações para usuários
+ * que configuraram "Reduzir movimento" no SO (iOS, macOS, Windows, Android).
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

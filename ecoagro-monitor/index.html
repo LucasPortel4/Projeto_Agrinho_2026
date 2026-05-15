@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!--
+  ================================================================
+    EcoAgro Monitor — Fazenda Inteligente & Sustentável
+    Projeto Agrinho 2026
+  ================================================================
+    COMPATIBILIDADE: Windows · Linux · macOS · iOS · Android
+    REQUISITO: Apenas um navegador moderno (Chrome, Firefox, Edge, Safari)
+    COMO RODAR: Abra o index.html no navegador OU use o
+                VSCode Live Server (clique direito → Open with Live Server)
+
+    ESTRUTURA DE ARQUIVOS:
+      index.html   → estrutura e conteúdo HTML
+      style.css    → estilos, animações e responsividade
+      script.js    → lógica, gráficos e interatividade
+
+    BIBLIOTECAS (todas via CDN — sem instalação):
+      • Chart.js   → gráficos animados
+      • AOS        → animações ao rolar a página
+      • Font Awesome → ícones
+      • Google Fonts → fontes Poppins e Montserrat
+  ================================================================
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EcoAgro Monitor — Tecnologia e sustentabilidade unidas no campo." />
+  <meta name="theme-color" content="#1B4332" />
+  <title>EcoAgro Monitor 🌱</title>
+
+  <!-- Google Fonts: Montserrat (títulos) + Poppins (corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6: ícones vetoriais -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- AOS (Animate On Scroll): animações ao rolar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <!-- Folha de estilos principal do projeto (caminho relativo, funciona em qualquer OS) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+    NAVBAR — Barra de navegação fixa no topo
+    Fica visível em todas as seções. No mobile, vira menu hamburguer.
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoAgro<strong>Monitor</strong></span>
+    </div>
+
+    <!-- Links de navegação: rolagem suave até cada seção -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="nav-link">Início</a></li>
+      <li><a href="#painel" class="nav-link">Painel</a></li>
+      <li><a href="#simulador" class="nav-link">Simulador</a></li>
+      <li><a href="#comparacao" class="nav-link">Antes & Depois</a></li>
+      <li><a href="#quiz" class="nav-link">Quiz</a></li>
+      <li><a href="/gamebase/html/index.html"class="nav-link">minigame</a></li>
+    </ul>
+
+    <!-- Botão hamburguer visível apenas em telas pequenas (mobile) -->
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu de navegação">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+
+  <!-- ============================================================
+    SEÇÃO 1 — HERO (Tela Inicial)
+    Primeira impressão do site. Fundo animado com cena de fazenda.
+    Frase de impacto + botões de ação + estatísticas rápidas.
+  ============================================================ -->
+  <section class="hero" id="hero">
+
+    <!-- Cena de fundo animada com CSS puro (sol, campo, árvores) -->
+    <div class="hero-scene">
+      <div class="scene-sky"></div>
+      <div class="scene-sun">
+        <div class="sun-rays"></div>
+      </div>
+      <div class="scene-clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+      </div>
+      <div class="scene-mountains"></div>
+      <div class="scene-field"></div>
+      <div class="scene-crops">
+        <!-- Fileiras de plantas estilizadas -->
+        <div class="crop-row">
+          <span class="crop"></span><span class="crop"></span><span class="crop"></span>
+          <span class="crop"></span><span class="crop"></span><span class="crop"></span>
+          <span class="crop"></span><span class="crop"></span>
+        </div>
+        <div class="crop-row row-2">
+          <span class="crop"></span><span class="crop"></span><span class="crop"></span>
+          <span class="crop"></span><span class="crop"></span><span class="crop"></span>
+        </div>
+      </div>
+      <div class="scene-trees">
+        <div class="tree t1"></div>
+        <div class="tree t2"></div>
+        <div class="tree t3"></div>
+        <div class="tree t4"></div>
+        <div class="tree t5"></div>
+      </div>
+      <!-- Partículas flutuantes (folhas / poeira de luz) -->
+      <div class="hero-particles" id="heroParticles"></div>
+    </div>
+
+    <!-- Overlay escuro para legibilidade do texto -->
+    <div class="hero-overlay"></div>
+
+    <!-- Conteúdo textual central -->
+    <div class="hero-content">
+      <p class="hero-tag">
+        <i class="fa-solid fa-globe"></i> Agrinho 2026 — Projeto Sustentável
+      </p>
+      <h1 class="hero-title">
+        Produzir hoje<br />
+        <span class="highlight">sem destruir</span> o amanhã.
+      </h1>
+      <p class="hero-subtitle">
+        Explore como tecnologia de ponta transforma a agricultura em algo
+        inteligente, eficiente e comprometido com o futuro do planeta.
+      </p>
+
+      <!-- Botões de ação principal -->
+      <div class="hero-buttons">
+        <a href="#painel" class="btn btn-primary">
+          <i class="fa-solid fa-seedling"></i> Explorar Fazenda
+        </a>
+        <a href="#simulador" class="btn btn-outline">
+          <i class="fa-solid fa-flask"></i> Ver Simulador
+        </a>
+      </div>
+
+      <!-- Indicadores de impacto rápido — números animados via JS -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="stat-num" data-target="40">0</span><span class="stat-unit">%</span>
+          </div>
+          <p>menos água</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="stat-num" data-target="60">0</span><span class="stat-unit">%</span>
+          </div>
+          <p>energia limpa</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="stat-num" data-target="35">0</span><span class="stat-unit">%</span>
+          </div>
+          <p>mais produção</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seta animada indicando scroll para baixo -->
+    <a href="#painel" class="scroll-indicator" aria-label="Rolar para baixo">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+
+  <!-- ============================================================
+    SEÇÃO 2 — PAINEL INTELIGENTE
+    Cards com métricas em tempo real simulado.
+    Cada card tem: ícone neon, valor animado, barra de progresso
+    e mini gráfico gerado pelo Chart.js.
+  ============================================================ -->
+  <section class="painel" id="painel">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">📊 Monitoramento em Tempo Real</span>
+        <h2>Painel Inteligente da Fazenda</h2>
+        <p>Sensores IoT coletando dados 24h. Clique em um card para mais detalhes.</p>
+      </div>
+
+      <!-- Grade responsiva de cards de métricas -->
+      <div class="painel-grid">
+
+        <!-- ---- Card: Umidade do Solo ---- -->
+        <div class="metric-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-icon icon-green">
+            <i class="fa-solid fa-droplet"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-label">Umidade do Solo</span>
+            <div class="card-value">
+              <!-- O span é atualizado em tempo real pelo script.js -->
+              <span id="val-umidade">72</span><small>%</small>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-green" id="bar-umidade" style="width: 72%"></div>
+            </div>
+            <!-- Wrapper com altura fixa — impede o Chart.js de expandir o canvas -->
+            <div class="chart-wrap">
+              <canvas id="chart-umidade" class="mini-chart"></canvas>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="status-badge status-ok">● Ótimo</span>
+            <span class="card-trend">▲ 3% hoje</span>
+          </div>
+        </div>
+
+        <!-- ---- Card: Consumo de Água ---- -->
+        <div class="metric-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-icon icon-blue">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-label">Consumo de Água</span>
+            <div class="card-value">
+              <span id="val-agua">320</span><small>L/h</small>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-blue" id="bar-agua" style="width: 35%"></div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chart-agua" class="mini-chart"></canvas>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="status-badge status-ok">● Econômico</span>
+            <span class="card-trend">▼ 12% hoje</span>
+          </div>
+        </div>
+
+        <!-- ---- Card: Energia Solar ---- -->
+        <div class="metric-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-icon icon-yellow">
+            <i class="fa-solid fa-solar-panel"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-label">Energia Solar</span>
+            <div class="card-value">
+              <span id="val-energia">87</span><small>%</small>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-yellow" id="bar-energia" style="width: 87%"></div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chart-energia" class="mini-chart"></canvas>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="status-badge status-ok">● Alta geração</span>
+            <span class="card-trend">▲ 5% hoje</span>
+          </div>
+        </div>
+
+        <!-- ---- Card: Qualidade do Ar ---- -->
+        <div class="metric-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="card-icon icon-teal">
+            <i class="fa-solid fa-wind"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-label">Qualidade do Ar</span>
+            <div class="card-value">
+              <span id="val-ar">94</span><small>IQA</small>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-teal" id="bar-ar" style="width: 94%"></div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chart-ar" class="mini-chart"></canvas>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="status-badge status-ok">● Excelente</span>
+            <span class="card-trend">▲ 1% hoje</span>
+          </div>
+        </div>
+
+        <!-- ---- Card Largo: Produção Agrícola (gráfico maior) ---- -->
+        <div class="metric-card card-wide" data-aos="fade-up" data-aos-delay="500">
+          <div class="card-icon icon-green">
+            <i class="fa-solid fa-wheat-awn"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-label">Produção Agrícola — últimas 7 semanas (ton.)</span>
+            <div class="card-value">
+              <span id="val-producao">4.8</span><small>t/sem</small>
+            </div>
+            <!-- Wrapper mais alto para o gráfico de produção (card largo) -->
+            <div class="wide-chart-wrap">
+              <canvas id="chart-producao" class="wide-chart"></canvas>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="status-badge status-ok">● 35% acima da média histórica</span>
+            <span class="card-trend">▲ Recorde este mês</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- fim painel-grid -->
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    SEÇÃO 3 — SIMULADOR SUSTENTÁVEL
+    O usuário escolhe práticas agrícolas (botões toggle) e vê
+    em tempo real como água, carbono e produtividade mudam.
+    Toda a lógica fica no script.js — função updateSimulator().
+  ============================================================ -->
+  <section class="simulador" id="simulador">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">🌎 Experimente Você Mesmo</span>
+        <h2>Simulador Sustentável</h2>
+        <p>Mude as práticas da fazenda e veja o impacto ambiental em tempo real.</p>
+      </div>
+
+      <div class="sim-wrapper">
+
+        <!-- Painel esquerdo: botões de configuração -->
+        <div class="sim-controls" data-aos="fade-right" data-aos-delay="100">
+          <h3><i class="fa-solid fa-sliders"></i> Configure a Fazenda</h3>
+
+          <!-- Grupo: Irrigação -->
+          <div class="control-group">
+            <label class="control-label">
+              <i class="fa-solid fa-droplet"></i> Sistema de Irrigação
+            </label>
+            <div class="toggle-group">
+              <!-- data-group e data-value são lidos pelo script.js -->
+              <button class="toggle-btn active" data-group="irrigacao" data-value="inteligente">
+                Inteligente <span class="eco-badge">ECO</span>
+              </button>
+              <button class="toggle-btn" data-group="irrigacao" data-value="tradicional">
+                Tradicional
+              </button>
+            </div>
+          </div>
+
+          <!-- Grupo: Energia -->
+          <div class="control-group">
+            <label class="control-label">
+              <i class="fa-solid fa-solar-panel"></i> Fonte de Energia
+            </label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" data-group="energia" data-value="solar">
+                Solar <span class="eco-badge">ECO</span>
+              </button>
+              <button class="toggle-btn" data-group="energia" data-value="combustivel">
+                Combustível
+              </button>
+            </div>
+          </div>
+
+          <!-- Grupo: Fertilizante -->
+          <div class="control-group">
+            <label class="control-label">
+              <i class="fa-solid fa-leaf"></i> Fertilizante
+            </label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" data-group="fertilizante" data-value="organico">
+                Orgânico <span class="eco-badge">ECO</span>
+              </button>
+              <button class="toggle-btn" data-group="fertilizante" data-value="quimico">
+                Químico
+              </button>
+            </div>
+          </div>
+
+          <!-- Grupo: Colheita -->
+          <div class="control-group">
+            <label class="control-label">
+              <i class="fa-solid fa-tractor"></i> Método de Colheita
+            </label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" data-group="colheita" data-value="automatizado">
+                Automatizado <span class="eco-badge">ECO</span>
+              </button>
+              <button class="toggle-btn" data-group="colheita" data-value="manual">
+                Manual
+              </button>
+            </div>
+          </div>
+
+          <!-- Botão reset -->
+          <button class="btn btn-outline btn-sm" id="btnResetSim">
+            <i class="fa-solid fa-rotate-left"></i> Resetar tudo
+          </button>
+        </div>
+
+        <!-- Painel direito: resultados em tempo real -->
+        <div class="sim-results" data-aos="fade-left" data-aos-delay="200">
+          <h3><i class="fa-solid fa-chart-line"></i> Impacto em Tempo Real</h3>
+
+          <!-- Resultado: Gasto de Água -->
+          <div class="result-item">
+            <div class="result-label">
+              <i class="fa-solid fa-droplet"></i>
+              <span>Gasto de Água</span>
+              <strong id="res-agua">320 L/h</strong>
+            </div>
+            <div class="result-bar-bg">
+              <div class="result-bar-fill rfill-blue" id="rbar-agua" style="width: 35%"></div>
+            </div>
+            <p class="result-msg" id="msg-agua">🟢 40% abaixo do modelo convencional</p>
+          </div>
+
+          <!-- Resultado: Emissão de CO₂ -->
+          <div class="result-item">
+            <div class="result-label">
+              <i class="fa-solid fa-cloud"></i>
+              <span>Emissão de Carbono</span>
+              <strong id="res-carbono">1.2 t CO₂</strong>
+            </div>
+            <div class="result-bar-bg">
+              <div class="result-bar-fill rfill-teal" id="rbar-carbono" style="width: 20%"></div>
+            </div>
+            <p class="result-msg" id="msg-carbono">🟢 60% menos emissão de gases</p>
+          </div>
+
+          <!-- Resultado: Produtividade -->
+          <div class="result-item">
+            <div class="result-label">
+              <i class="fa-solid fa-wheat-awn"></i>
+              <span>Produtividade</span>
+              <strong id="res-prod">Alta (+35%)</strong>
+            </div>
+            <div class="result-bar-bg">
+              <div class="result-bar-fill rfill-green" id="rbar-prod" style="width: 85%"></div>
+            </div>
+            <p class="result-msg" id="msg-prod">🟢 Máxima eficiência no campo</p>
+          </div>
+
+          <!-- Resultado: Pontuação Ecológica -->
+          <div class="result-item">
+            <div class="result-label">
+              <i class="fa-solid fa-star"></i>
+              <span>Pontuação Ecológica</span>
+              <strong id="res-score">100 / 100</strong>
+            </div>
+            <div class="result-bar-bg">
+              <div class="result-bar-fill rfill-yellow" id="rbar-score" style="width: 100%"></div>
+            </div>
+            <!-- Classificação textual que muda conforme a pontuação -->
+            <p class="result-msg" id="msg-score">🌟 Fazenda Certificada Sustentável!</p>
+          </div>
+
+          <!-- Gráfico de radar mostrando o perfil da fazenda (Chart.js) -->
+          <canvas id="chart-radar" class="radar-chart" height="200"></canvas>
+        </div>
+
+      </div>
+      <!-- fim sim-wrapper -->
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    SEÇÃO 4 — COMPARAÇÃO ANTES × DEPOIS
+    Slider interativo (arrastar ou clicar) mostra visualmente a
+    diferença entre a fazenda poluída e a fazenda sustentável.
+    Toda a lógica do slider fica no script.js — initSlider().
+  ============================================================ -->
+  <section class="comparacao" id="comparacao">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">🔄 Veja a Transformação</span>
+        <h2>Antes × Depois</h2>
+        <p>Arraste o controle deslizante para revelar a diferença.</p>
+      </div>
+
+      <!-- Wrapper do slider de comparação -->
+      <div class="slider-wrapper" data-aos="zoom-in" data-aos-delay="100">
+
+        <!-- Camada de fundo: ANTES (fazenda convencional poluída) -->
+        <div class="slider-before">
+          <div class="farm-scene farm-before">
+            <!-- Céu poluído com smog -->
+            <div class="fb-sky"></div>
+            <!-- Nuvens de poluição -->
+            <div class="fb-smog-cloud sc1"></div>
+            <div class="fb-smog-cloud sc2"></div>
+            <div class="fb-smog-cloud sc3"></div>
+            <div class="fb-smog-cloud sc4"></div>
+            <!-- Montanhas áridas -->
+            <div class="fb-mountains"></div>
+            <!-- Árvores mortas à esquerda -->
+            <div class="fb-dead-trees">
+              <div class="dead-tree dt1"></div>
+              <div class="dead-tree dt2"></div>
+              <div class="dead-tree dt3"></div>
+            </div>
+            <!-- Grupo da fábrica com galpão e chaminés -->
+            <div class="fb-factory-group">
+              <!-- Galpão menor -->
+              <div class="fb-shed"></div>
+              <!-- Fumaça das chaminés -->
+              <div class="fb-smoke-group">
+                <div class="smoke-puff sp1"></div>
+                <div class="smoke-puff sp2"></div>
+                <div class="smoke-puff sp3"></div>
+                <div class="smoke-puff sp4"></div>
+                <div class="smoke-puff sp5"></div>
+                <div class="smoke-puff sp6"></div>
+              </div>
+              <!-- Corpo principal + chaminés -->
+              <div class="fb-factory">
+                <div class="fb-chimney ch1"></div>
+                <div class="fb-chimney ch2"></div>
+                <div class="fb-chimney ch3"></div>
+              </div>
+            </div>
+            <!-- Cerca destruída (madeira velha) -->
+            <div class="fb-fence-wrap"></div>
+            <!-- Chão seco com poça -->
+            <div class="fb-field"></div>
+            <div class="fb-puddle"></div>
+          </div>
+          <div class="slider-label label-before">
+            <i class="fa-solid fa-industry"></i> Antes — Convencional
+          </div>
+        </div>
+
+        <!-- Camada sobreposta: DEPOIS (fazenda sustentável) -->
+        <div class="slider-after" id="sliderAfter">
+          <div class="farm-scene farm-after">
+            <!-- Céu azul-verde vibrante -->
+            <div class="fa-sky"></div>
+            <!-- Nuvens brancas fofas -->
+            <div class="fa-cloud fc1"></div>
+            <div class="fa-cloud fc2"></div>
+            <div class="fa-cloud fc3"></div>
+            <!-- Sol brilhante com halo -->
+            <div class="fa-sun"></div>
+            <!-- Pássaros voando -->
+            <div class="fa-birds">
+              <div class="bird b-1"></div>
+              <div class="bird b-2"></div>
+              <div class="bird b-3"></div>
+            </div>
+            <!-- Montanhas verdes ao fundo -->
+            <div class="fa-mountains"></div>
+            <!-- Array de painéis solares -->
+            <div class="fa-panels">
+              <div class="panel"><div class="panel-leg"></div></div>
+              <div class="panel"><div class="panel-leg"></div></div>
+              <div class="panel"><div class="panel-leg"></div></div>
+              <div class="panel"><div class="panel-leg"></div></div>
+              <div class="panel"><div class="panel-leg"></div></div>
+            </div>
+            <!-- Poste de distribuição de energia -->
+            <div class="fa-pole"></div>
+            <!-- Turbina eólica central -->
+            <div class="fa-turbine">
+              <div class="turbine-nacelle"></div>
+              <div class="turbine-head">
+                <div class="blade b1"></div>
+                <div class="blade b2"></div>
+                <div class="blade b3"></div>
+              </div>
+              <div class="turbine-pole"></div>
+            </div>
+            <!-- Árvores frondosas à direita -->
+            <div class="fa-trees">
+              <div class="atree at1">
+                <div class="atree-top"></div>
+                <div class="atree-trunk"></div>
+              </div>
+              <div class="atree at2">
+                <div class="atree-top"></div>
+                <div class="atree-trunk"></div>
+              </div>
+              <div class="atree at3">
+                <div class="atree-top"></div>
+                <div class="atree-trunk"></div>
+              </div>
+            </div>
+            <!-- Fileiras de plantação -->
+            <div class="fa-crop-rows"></div>
+            <!-- Cerca de madeira bem cuidada -->
+            <div class="fa-fence-wrap"></div>
+            <!-- Campo verde -->
+            <div class="fa-field"></div>
+            <!-- Riacho -->
+            <div class="fa-river"></div>
+          </div>
+          <div class="slider-label label-after">
+            <i class="fa-solid fa-leaf"></i> Depois — Sustentável
+          </div>
+        </div>
+
+        <!-- Linha divisória + handle arrastável -->
+        <div class="slider-divider" id="sliderDivider">
+          <div class="slider-handle" id="sliderHandle">
+            <i class="fa-solid fa-left-right"></i>
+          </div>
+        </div>
+
+      </div>
+      <!-- fim slider-wrapper -->
+
+      <!-- Cards de impacto abaixo do slider -->
+      <div class="impact-cards" data-aos="fade-up" data-aos-delay="200">
+        <div class="impact-card">
+          <i class="fa-solid fa-droplet"></i>
+          <strong>-40%</strong>
+          <p>Consumo de água</p>
+        </div>
+        <div class="impact-card">
+          <i class="fa-solid fa-cloud"></i>
+          <strong>-60%</strong>
+          <p>Emissão de CO₂</p>
+        </div>
+        <div class="impact-card">
+          <i class="fa-solid fa-bolt"></i>
+          <strong>+87%</strong>
+          <p>Energia renovável</p>
+        </div>
+        <div class="impact-card">
+          <i class="fa-solid fa-wheat-awn"></i>
+          <strong>+35%</strong>
+          <p>Produtividade</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    SEÇÃO 5 — QUIZ INTERATIVO
+    Perguntas sobre sustentabilidade e agro tech.
+    O script.js controla a lógica: showQuestion(), checkAnswer(),
+    showResult(). No final: pontuação + selo ecológico animado.
+  ============================================================ -->
+  <section class="quiz" id="quiz">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">🧠 Teste seus Conhecimentos</span>
+        <h2>Quiz da Fazenda Inteligente</h2>
+        <p>5 perguntas rápidas sobre sustentabilidade no campo.</p>
+      </div>
+
+      <!-- Caixa principal do quiz -->
+      <div class="quiz-box" data-aos="zoom-in" data-aos-delay="100">
+
+        <!-- Barra de progresso do quiz (quantas perguntas já respondeu) -->
+        <div class="quiz-progress">
+          <div class="quiz-progress-fill" id="quizProgress" style="width: 0%"></div>
+        </div>
+
+        <!-- Contador de pergunta atual -->
+        <p class="quiz-counter" id="quizCounter">Pergunta 1 de 5</p>
+
+        <!-- Área da pergunta atual (preenchida dinamicamente pelo JS) -->
+        <div class="quiz-question" id="quizQuestion">
+          Qual sistema de irrigação economiza mais água?
+        </div>
+
+        <!-- Área das alternativas (botões gerados dinamicamente pelo JS) -->
+        <div class="quiz-options" id="quizOptions">
+          <!-- Preenchido pelo script.js -->
+        </div>
+
+        <!-- Feedback visual após cada resposta -->
+        <div class="quiz-feedback" id="quizFeedback"></div>
+
+        <!-- Botão para avançar para a próxima pergunta -->
+        <button class="btn btn-primary" id="btnProxima" style="display: none;">
+          Próxima <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <!-- Tela de resultado final (oculta até terminar o quiz) -->
+        <div class="quiz-result" id="quizResult" style="display: none;">
+          <div class="result-badge" id="resultBadge">
+            <i class="fa-solid fa-medal"></i>
+          </div>
+          <h3 id="resultTitulo">Parabéns!</h3>
+          <p id="resultTexto">Você acertou X de 5 perguntas.</p>
+          <div class="seal" id="resultSeal">
+            <i class="fa-solid fa-certificate"></i>
+            <span id="sealLabel">Especialista Sustentável</span>
+          </div>
+          <button class="btn btn-primary" id="btnReiniciarQuiz">
+            <i class="fa-solid fa-rotate-left"></i> Jogar Novamente
+          </button>
+        </div>
+
+      </div>
+      <!-- fim quiz-box -->
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    RODAPÉ — Footer profissional
+    Créditos do projeto, links de redes sociais (fictícias),
+    GitHub e referência ao tema Agrinho 2026.
+  ============================================================ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+
+      <!-- Topo do rodapé: logo + descrição -->
+      <div class="footer-top">
+        <div class="footer-brand" data-aos="fade-right">
+          <div class="footer-logo">
+            <i class="fa-solid fa-leaf"></i>
+            <span>EcoAgro<strong>Monitor</strong></span>
+          </div>
+          <p>Tecnologia e natureza caminhando juntas pelo futuro do agronegócio sustentável.</p>
+          <!-- Redes sociais do projeto (ficticias) -->
+          <div class="social-links">
+            <a href="#" aria-label="Instagram do projeto" class="social-btn">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter do projeto" class="social-btn">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="#" aria-label="YouTube do projeto" class="social-btn">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub" class="social-btn">
+              <i class="fa-brands fa-github"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navegação rápida no rodapé -->
+        <div class="footer-nav" data-aos="fade-up" data-aos-delay="100">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#painel">Painel</a></li>
+            <li><a href="#simulador">Simulador</a></li>
+            <li><a href="#comparacao">Antes & Depois</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+          </ul>
+        </div>
+
+        <!-- Informações do projeto -->
+        <div class="footer-info" data-aos="fade-left" data-aos-delay="200">
+          <h4>Sobre o Projeto</h4>
+          <ul>
+            <li><i class="fa-solid fa-award"></i> Agrinho 2026</li>
+            <li><i class="fa-solid fa-tag"></i> Tecnologia & Sustentabilidade</li>
+            <li><i class="fa-solid fa-code"></i> HTML · CSS · JavaScript</li>
+            <li><i class="fa-solid fa-chart-bar"></i> Chart.js · AOS · FontAwesome</li>
+            <li>
+              <i class="fa-brands fa-github"></i>
+              <a href="https://github.com" target="_blank" rel="noopener">Ver no GitHub</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Linha de copyright -->
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 EcoAgro Monitor — Feito com
+          <i class="fa-solid fa-heart" style="color: #52B788;"></i>
+          para o Agrinho 2026 · Todos os direitos reservados.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+    BOTÃO VOLTAR AO TOPO
+    Aparece após rolar 300px. Lógica no script.js.
+  ============================================================ -->
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+
+  <!-- ============================================================
+    SCRIPTS — Carregados no final do body para melhor performance
+    (O DOM já está pronto quando o JS executa)
+  ============================================================ -->
+
+  <!-- Chart.js: biblioteca de gráficos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <!-- AOS: animações ao rolar -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <!-- Script principal do projeto (caminho relativo — funciona em qualquer OS) -->
+  <script src="script.js"></script>
+
+</body>
+</html>

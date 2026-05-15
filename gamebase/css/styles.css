@@ -1,0 +1,568 @@
+/* ============================================================
+   GameBase - Estilos Principais
+   Arquivo: css/styles.css
+   Descrição: Estilos globais, variáveis e layout da página
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   IMPORTAÇÃO DE FONTES
+   Carrega fontes do Google Fonts para títulos e corpo
+   ---------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600&display=swap');
+
+/* ----------------------------------------------------------
+   VARIÁVEIS GLOBAIS (CSS Custom Properties)
+   Define a paleta de cores, fontes e espaçamentos do projeto
+   ---------------------------------------------------------- */
+:root {
+  --bg-primary:       #0d0d1a;
+  --bg-secondary:     #12122a;
+  --bg-card:          #16162e;
+  --bg-card-hover:    #1c1c3a;
+
+  --accent-purple:    #7c3aed;
+  --accent-violet:    #9333ea;
+  --accent-pink:      #ec4899;
+  --accent-cyan:      #06b6d4;
+
+  --text-primary:     #f0f0ff;
+  --text-secondary:   #a0a0c8;
+  --text-muted:       #5a5a8a;
+
+  --border-color:     rgba(124, 58, 237, 0.25);
+  --border-hover:     rgba(124, 58, 237, 0.6);
+
+  --font-display:     'Orbitron', monospace;
+  --font-body:        'Exo 2', sans-serif;
+
+  --radius-sm:        6px;
+  --radius-md:        12px;
+  --radius-lg:        18px;
+
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow:      0 0 20px rgba(124, 58, 237, 0.3);
+  --shadow-hover:     0 8px 40px rgba(124, 58, 237, 0.4);
+
+  --transition-fast:  0.2s ease;
+  --transition-med:   0.35s ease;
+}
+
+/* ----------------------------------------------------------
+   RESET E BASE
+   Remove estilos padrão do navegador e define o box model
+   ---------------------------------------------------------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ----------------------------------------------------------
+   BACKGROUND COM EFEITO DE GRADE (GRID)
+   Cria a textura de linhas ao fundo da página
+   ---------------------------------------------------------- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Garante que todo conteúdo fique acima do background */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ----------------------------------------------------------
+   BARRA DE NAVEGAÇÃO (NAVBAR)
+   Cabeçalho fixo com logo, links e campo de busca
+   ---------------------------------------------------------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 70px;
+  background: rgba(13, 13, 26, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Logo: ícone + nome da marca */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  font-size: 1.6rem;
+}
+
+/* Texto do logo com destaque na segunda parte */
+.navbar__logo-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.navbar__logo-text span {
+  color: var(--accent-purple);
+}
+
+/* Menu de navegação central */
+.navbar__nav {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+/* Links da navegação com indicador ativo */
+.navbar__nav-link {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.navbar__nav-link:hover {
+  color: var(--text-primary);
+}
+
+/* Sublinhado animado no link ativo */
+.navbar__nav-link.active {
+  color: var(--accent-purple);
+}
+
+.navbar__nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: var(--accent-purple);
+  border-radius: 2px;
+}
+
+/* Campo de busca na navbar */
+.navbar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  min-width: 220px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.navbar__search:focus-within {
+  border-color: var(--accent-purple);
+  box-shadow: var(--shadow-glow);
+}
+
+.navbar__search-icon {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Input de busca sem estilo padrão */
+.navbar__search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  width: 100%;
+}
+
+.navbar__search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------
+   SEÇÃO HERO (CABEÇALHO DO CATÁLOGO)
+   Título principal, subtítulo e ícone decorativo
+   ---------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  /* Gradiente no texto do título */
+  background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+/* Linha divisória com ícone central */
+.hero__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.hero__divider::before,
+.hero__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color));
+}
+
+.hero__divider::after {
+  background: linear-gradient(to left, transparent, var(--border-color));
+}
+
+.hero__divider-icon {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 8px var(--accent-purple));
+}
+
+/* ----------------------------------------------------------
+   GRADE DE CARDS DE JOGOS
+   Layout responsivo em colunas para exibir os jogos
+   ---------------------------------------------------------- */
+.catalog {
+  padding: 40px 40px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid responsivo: 3 colunas no desktop, menor em mobile */
+.catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ----------------------------------------------------------
+   CARD DE JOGO
+   Componente individual de cada jogo no catálogo
+   ---------------------------------------------------------- */
+.game-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform var(--transition-med),
+    border-color var(--transition-med),
+    box-shadow var(--transition-med),
+    background var(--transition-med);
+  cursor: pointer;
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Animação escalonada para cada card */
+.game-card:nth-child(1) { animation-delay: 0.1s; }
+.game-card:nth-child(2) { animation-delay: 0.2s; }
+.game-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* Efeito hover: eleva e brilha o card */
+.game-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-hover);
+  background: var(--bg-card-hover);
+}
+
+/* Imagem / Capa do jogo */
+.game-card__cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+/* Imagem com efeito de zoom no hover */
+.game-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.game-card:hover .game-card__cover img {
+  transform: scale(1.06);
+}
+
+/* ----------------------------------------------------------
+   OVERLAY DE HUD (Indicadores sobre a imagem)
+   Exibe informações como pontuação, vidas e posição
+   ---------------------------------------------------------- */
+.game-card__hud {
+  position: absolute;
+  inset: 0;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 50%);
+}
+
+/* Indicador individual do HUD (ex: SCORE, LIVES) */
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.hud-item--right {
+  align-items: flex-end;
+}
+
+/* Label pequeno acima do valor (ex: "SCORE") */
+.hud-item__label {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+}
+
+/* Valor principal do HUD (ex: "1.250") */
+.hud-item__value {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* Ícones de vida (ex: ♥♥♥ ou naves) */
+.hud-item__icons {
+  display: flex;
+  gap: 3px;
+  font-size: 0.85rem;
+}
+
+/* ----------------------------------------------------------
+   CONTEÚDO DO CARD (abaixo da imagem)
+   Nome, gênero, descrição e botão de ação
+   ---------------------------------------------------------- */
+.game-card__body {
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+}
+
+/* Título do jogo */
+.game-card__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+/* Badge de gênero/categoria */
+.game-card__genre {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent-cyan);
+}
+
+.game-card__genre::before {
+  content: '🏷';
+  font-size: 0.7rem;
+}
+
+/* Descrição curta do jogo */
+.game-card__description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+}
+
+/* Botão "Ver detalhes" */
+.game-card__btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast);
+  text-align: center;
+}
+
+/* Hover no botão: fundo roxo com brilho */
+.game-card__btn:hover {
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.5);
+  color: #fff;
+}
+
+/* ----------------------------------------------------------
+   PAGINAÇÃO
+   Controles de navegação entre páginas do catálogo
+   ---------------------------------------------------------- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 0 60px;
+}
+
+/* Botão individual de página */
+.pagination__btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.pagination__btn:hover {
+  border-color: var(--accent-purple);
+  color: var(--text-primary);
+}
+
+/* Página ativa com destaque roxo */
+.pagination__btn.active {
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+}
+
+/* ----------------------------------------------------------
+   ANIMAÇÃO DE ENTRADA DOS CARDS
+   Fade + slide para cima ao carregar a página
+   ---------------------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVIDADE
+   Adapta o layout para telas menores (tablet e mobile)
+   ---------------------------------------------------------- */
+
+/* Tablet: 2 colunas */
+@media (max-width: 900px) {
+  .catalog__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .catalog {
+    padding: 30px 20px 50px;
+  }
+}
+
+/* Mobile: 1 coluna e navbar simplificada */
+@media (max-width: 580px) {
+  .catalog__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar__search {
+    display: none;
+  }
+
+  .hero {
+    padding: 40px 20px 30px;
+  }
+}

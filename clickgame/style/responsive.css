@@ -1,0 +1,161 @@
+/*
+ * responsive.css
+ * Adapta o layout para todos os tamanhos de tela:
+ * desktop, tablet (iPad), mobile (iPhone/Android), e telas muito pequenas.
+ * Garante portabilidade total entre iOS, Android, Windows, macOS e Linux.
+ */
+
+/* =========================================
+   TABLET GRANDE / DESKTOP PEQUENO (≤ 900px)
+   ========================================= */
+@media (max-width: 900px) {
+  .panel--left  { width: 170px; }
+  .panel--right { width: 220px; }
+}
+
+/* =========================================
+   TABLET (≤ 700px): colapsa painéis laterais
+   ========================================= */
+@media (max-width: 700px) {
+  /* Layout muda de 3 colunas para coluna única */
+  .game-layout {
+    flex-direction: column;
+  }
+
+  /* Painéis laterais viram barras horizontais compactas */
+  .panel--left,
+  .panel--right {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    border-right: none;
+    border-left: none;
+  }
+
+  /* Stats ficam em linha horizontal no mobile */
+  .panel--left {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px;
+    order: 3; /* vai para baixo do centro */
+  }
+
+  .stat-card {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 100px;
+  }
+
+  .btn-reset {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  /* Centro fica no topo no mobile */
+  .center { order: 1; padding: 16px 12px; }
+
+  /* Painel direito (loja) fica abaixo do centro */
+  .panel--right {
+    order: 2;
+    width: 100%;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  /* Galinha menor em mobile */
+  .chicken-btn {
+    font-size: clamp(64px, 18vw, 90px);
+  }
+
+  /* Grama não aparece em mobile (não há espaço) */
+  .grass { display: none; }
+}
+
+/* =========================================
+   MOBILE PEQUENO (≤ 400px): iPhone SE, Android compacto
+   ========================================= */
+@media (max-width: 400px) {
+  .header { padding: 10px 12px; }
+  .header__title { font-size: 1.1rem; }
+  .header__egg-display { font-size: 0.8rem; padding: 5px 12px; }
+
+  .stat-card { flex: 1 1 100%; }
+
+  .chicken-btn { font-size: 60px; }
+
+  .notif {
+    font-size: 0.85rem;
+    padding: 9px 18px;
+  }
+}
+
+/* =========================================
+   TELAS MUITO LARGAS (≥ 1400px): monitores 4K, ultrawide
+   ========================================= */
+@media (min-width: 1400px) {
+  .panel--left  { width: 240px; }
+  .panel--right { width: 310px; }
+}
+
+/* =========================================
+   MODO PAISAGEM (landscape) em mobile
+   ========================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+  .game-layout {
+    flex-direction: row; /* volta ao layout horizontal */
+  }
+
+  .panel--left,
+  .panel--right {
+    width: 160px;
+    max-height: none;
+    flex-direction: column;
+    order: unset;
+  }
+
+  .center { order: unset; padding: 8px; }
+
+  .chicken-btn { font-size: 56px; }
+
+  .grass { display: none; }
+}
+
+/* =========================================
+   MODO ESCURO DO SISTEMA (prefers-color-scheme)
+   Adapta automaticamente ao tema do iOS/macOS/Android/Windows
+   ========================================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #1e1408;
+    --bg2:       #2a1d08;
+    --panel:     #241a08;
+    --border:    #6b4d10;
+    --text:      #f5e6c0;
+    --text-muted:#c49a40;
+    --text-light:#888;
+    --shadow:    rgba(0, 0, 0, 0.4);
+  }
+
+  .stat-card { background: var(--bg2); }
+  .upgrade-btn { background: linear-gradient(135deg, #2a1d08, #1e1408); }
+  .upgrade-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3a2808, #2a1d08);
+  }
+  .tab-btn { background: var(--bg2); color: var(--text); }
+  .milestone {
+    background: linear-gradient(135deg, #1a2e1a, #142814);
+    border-color: #2e7d32;
+  }
+  .milestone--locked {
+    background: #222;
+    border-color: #444;
+  }
+}
+
+/* =========================================
+   PRINT: desativa animações e background ao imprimir
+   ========================================= */
+@media print {
+  .chicken-area, .grass, .notif { display: none; }
+  .game-layout { flex-direction: column; }
+}

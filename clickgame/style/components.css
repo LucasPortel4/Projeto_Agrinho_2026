@@ -1,0 +1,313 @@
+/*
+ * components.css
+ * Estilos de todos os componentes reutilizáveis do jogo:
+ * stat-card, chicken-btn, upgrade-btn, tabs, milestones, notif, etc.
+ */
+
+/* =========================================
+   STAT CARDS (painel esquerdo)
+   ========================================= */
+.stat-card {
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-card__label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.stat-card__value--level {
+  color: var(--accent2);
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   BOTÃO DE RESET
+   ========================================= */
+.btn-reset {
+  margin-top: auto;
+  padding: 9px 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  transition: background var(--transition), color var(--transition);
+  /* Área de toque mínima para mobile (44px recomendado pela Apple/Google) */
+  min-height: 44px;
+}
+
+.btn-reset:hover {
+  background: var(--danger);
+  color: var(--white);
+}
+
+/* =========================================
+   ÁREA DA GALINHA (centro)
+   ========================================= */
+.egg-display {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.eps-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.chicken-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+/* Botão da galinha: tamanho fluido para todos os dispositivos */
+.chicken-btn {
+  font-size: clamp(72px, 15vw, 120px);
+  line-height: 1;
+  filter: drop-shadow(0 8px 24px rgba(200, 100, 0, 0.25));
+  transition: transform 0.08s cubic-bezier(.36,.07,.19,.97);
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  z-index: 2;
+  /* Área de toque ampla para facilitar clique em mobile */
+  padding: 10px;
+  touch-action: manipulation;
+}
+
+.chicken-btn:active {
+  transform: scale(0.88) rotate(-8deg);
+}
+
+/* Anel de pulso ao clicar */
+.pulse-ring {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.epc-label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--accent2);
+  opacity: 0.85;
+}
+
+/* Grama decorativa (posicionada absolutamente no fundo do centro) */
+.grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(to top, #8bc34a, rgba(174, 213, 97, 0.5));
+  border-radius: 50% 50% 0 0 / 28px 28px 0 0;
+  pointer-events: none;
+}
+
+/* =========================================
+   TEXTO FLUTUANTE (ao clicar)
+   ========================================= */
+.float-text {
+  position: fixed;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent2);
+  text-shadow: 0 2px 8px rgba(255, 200, 0, 0.4);
+  pointer-events: none;
+  z-index: 999;
+  font-family: var(--font-display);
+}
+
+/* =========================================
+   ABAS DA LOJA
+   ========================================= */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--bg2);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text);
+  transition: all var(--transition);
+  min-height: 44px; /* toque mínimo mobile */
+}
+
+.tab-btn:hover {
+  border-color: var(--accent);
+}
+
+.tab-btn--active {
+  background: var(--accent);
+  border-color: var(--accent2);
+  color: var(--white);
+}
+
+.tab-content { display: none; flex-direction: column; gap: 8px; }
+.tab-content--active { display: flex; }
+
+/* =========================================
+   BOTÕES DE UPGRADE (loja)
+   ========================================= */
+.upgrade-btn {
+  background: linear-gradient(135deg, #fff8e1, var(--bg2));
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 11px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  position: relative;
+  transition: all var(--transition);
+  min-height: 44px; /* toque mínimo mobile */
+  width: 100%;
+}
+
+.upgrade-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #fff3c4, #fdd878);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.upgrade-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.upgrade-btn__icon { font-size: 1.8rem; flex-shrink: 0; }
+
+.upgrade-btn__info { flex: 1; min-width: 0; }
+
+.upgrade-btn__name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.upgrade-btn__desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+  /* Evita overflow em telas pequenas */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upgrade-btn__cost {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--accent2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.upgrade-btn__owned {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  background: var(--green);
+  color: var(--white);
+  border-radius: var(--radius-pill);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+}
+
+/* =========================================
+   CONQUISTAS (milestones)
+   ========================================= */
+.milestone {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border: 2px solid #81c784;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.milestone--locked {
+  background: #f5f5f5;
+  border-color: #ccc;
+  opacity: 0.5;
+  filter: grayscale(0.6);
+}
+
+.milestone__icon { font-size: 1.5rem; flex-shrink: 0; }
+
+.milestone__name {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.milestone__desc {
+  font-size: 0.76rem;
+  color: #555;
+}
+
+/* =========================================
+   NOTIFICAÇÃO GLOBAL
+   ========================================= */
+.notif {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  padding: 11px 28px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 24px var(--shadow-btn);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity var(--transition-slow);
+  white-space: nowrap;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.notif--show { opacity: 1; }

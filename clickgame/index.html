@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Portabilidade: viewport responsivo para mobile (iOS/Android) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- PWA: compatibilidade com iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Galinha Clicker" />
+
+  <!-- PWA: compatibilidade com Android Chrome -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#d45f00" />
+
+  <!-- Previne detecção automática de telefone no iOS -->
+  <meta name="format-detection" content="telephone=no" />
+
+  <title>🐔 Galinha Clicker</title>
+
+  <!-- Google Fonts com fallback seguro para todos os SOs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Folhas de estilo separadas por responsabilidade -->
+  <link rel="stylesheet" href="style/animations.css" />
+  <link rel="stylesheet" href="style/components.css" />
+  <link rel="stylesheet" href="style/layout.css" />
+  <link rel="stylesheet" href="style/reset.css" />
+  <link rel="stylesheet" href="style/responsive.css" />
+  <link rel="stylesheet" href="style/theme.css" />
+</head>
+<body>
+
+  <!-- CABEÇALHO: marca e contador global de ovos -->
+  <header class="header">
+    <div class="header__brand">
+      <span class="header__icon" aria-hidden="true">🐔</span>
+      <h1 class="header__title">Galinha Clicker</h1>
+    </div>
+    <div class="header__egg-display" aria-live="polite" aria-label="Total de ovos">
+      🥚 <span id="header-eggs">0</span> ovos
+    </div>
+  </header>
+
+  <!-- LAYOUT PRINCIPAL DE 3 COLUNAS -->
+  <div class="game-layout">
+
+    <!-- PAINEL ESQUERDO: estatísticas do jogador -->
+    <aside class="panel panel--left" aria-label="Estatísticas do jogador">
+      <h2 class="panel__title">📊 Stats</h2>
+      <div class="stat-card">
+        <span class="stat-card__label">🥚 Total coletado</span>
+        <span class="stat-card__value" id="stat-total">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">🖱️ Cliques</span>
+        <span class="stat-card__value" id="stat-clicks">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">⚡ Por clique</span>
+        <span class="stat-card__value" id="stat-epc">1</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">⏱️ Por segundo</span>
+        <span class="stat-card__value" id="stat-eps">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">🏆 Nível</span>
+        <span class="stat-card__value stat-card__value--level" id="stat-level">Pintinho</span>
+      </div>
+      <button class="btn-reset" id="btn-reset" aria-label="Resetar progresso do jogo">
+        🗑️ Resetar
+      </button>
+    </aside>
+
+    <!-- CENTRO: galinha clicável e placar principal -->
+    <main class="center" aria-label="Área principal do jogo">
+      <div class="egg-display" aria-live="polite" aria-label="Ovos atuais">
+        🥚 <span id="egg-count">0</span>
+      </div>
+      <div class="eps-label" id="eps-label">0 ovos por segundo</div>
+
+      <div class="chicken-area">
+        <div class="pulse-ring" id="pulse" aria-hidden="true"></div>
+        <!-- Botão da galinha: suporta mouse, toque (touch) e teclado -->
+        <button
+          id="chicken-btn"
+          class="chicken-btn"
+          aria-label="Clique na galinha para coletar ovos"
+          tabindex="0"
+        >🐔</button>
+      </div>
+
+      <div class="epc-label">
+        +<span id="epc-label">1</span> ovo por clique
+      </div>
+
+      <!-- Grama decorativa -->
+      <div class="grass" aria-hidden="true"></div>
+    </main>
+
+    <!-- PAINEL DIREITO: loja e conquistas -->
+    <aside class="panel panel--right" aria-label="Loja e conquistas">
+      <h2 class="panel__title">🛒 Loja</h2>
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn tab-btn--active" role="tab" aria-selected="true"
+          onclick="UI.switchTab('upgrades', this)">Melhorias</button>
+        <button class="tab-btn" role="tab" aria-selected="false"
+          onclick="UI.switchTab('milestones', this)">Conquistas</button>
+      </div>
+
+      <div id="tab-upgrades" class="tab-content tab-content--active" role="tabpanel"></div>
+      <div id="tab-milestones" class="tab-content" role="tabpanel"></div>
+    </aside>
+  </div>
+
+  <!-- NOTIFICAÇÃO GLOBAL acessível via aria-live -->
+  <div id="notif" class="notif" role="alert" aria-live="assertive"></div>
+
+  <!-- MÓDULOS JS carregados em ordem de dependência -->
+  <script src="script/milestones.js"></script>
+  <script src="script/loop.js"></script>
+  <script src="script/levels.js"></script>
+  <script src="script/init.js"></script>
+  <script src="script/formatter.js"></script>
+  <script src="script/floatText.js"></script>
+  <script src="script/device.js"></script>
+  <script src="script/click.js"></script>
+  <script src="script/ui.js"></script>
+  <script src="script/state.js"></script>
+  <script src="script/notification.js"></script>
+  <script src="script/save.js"></script>
+  <script src="script/upgrades.js"></script>
+</body>
+</html>

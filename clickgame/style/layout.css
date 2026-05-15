@@ -1,0 +1,116 @@
+/*
+ * layout.css
+ * Define a estrutura geral da página: header e grid de 3 colunas.
+ * Usa flexbox e CSS Grid para compatibilidade máxima entre browsers.
+ */
+
+/* === BODY === */
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(253, 232, 176, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(255, 213, 79, 0.2) 0%, transparent 40%);
+  color: var(--text);
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: 0 4px 18px var(--shadow-btn);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.header__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 2rem); /* clamp: tamanho fluido em todos os dispositivos */
+  color: var(--white);
+  text-shadow: 2px 2px 0 var(--accent-dark);
+}
+
+.header__egg-display {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-weight: 800;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+/* === LAYOUT 3 COLUNAS === */
+.game-layout {
+  display: flex;
+  /* Altura restante da tela após o header */
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
+}
+
+/* === PAINÉIS LATERAIS === */
+.panel {
+  background: var(--panel);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  overflow-y: auto;
+  /* Scroll suave em iOS (momentum scrolling) */
+  -webkit-overflow-scrolling: touch;
+}
+
+.panel--left {
+  width: 210px;
+  border-right: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.panel--right {
+  width: 275px;
+  border-left: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.panel__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--accent2);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* === CENTRO === */
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scrollbar customizada (não obstruída no Windows) */
+.panel::-webkit-scrollbar { width: 5px; }
+.panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-pill);
+}

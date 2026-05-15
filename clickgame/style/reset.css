@@ -1,0 +1,72 @@
+/*
+ * reset.css
+ * Remove estilos padrão inconsistentes entre navegadores e sistemas operacionais.
+ * Garante base uniforme em: Chrome, Firefox, Safari (iOS/macOS), Edge, Samsung Internet, etc.
+ */
+
+/* Box-sizing universal: evita diferenças de layout entre engines */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove tap highlight azul/cinza no iOS e Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* Evita zoom automático em inputs no iOS Safari */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  /* Renderização de fonte suave em macOS e iOS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Evita scroll horizontal acidental em mobile */
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh; /* dvh: suporte a barra de endereço dinâmica no iOS/Android */
+}
+
+/* Botões herdam fonte do pai (padrão inconsistente em alguns browsers) */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Remove estilo padrão de botão */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* Melhora resposta ao toque em mobile */
+  touch-action: manipulation;
+}
+
+/* Remove outline feio mas mantém acessibilidade para teclado */
+button:focus-visible {
+  outline: 3px solid var(--accent, #e8a020);
+  outline-offset: 3px;
+}
+
+/* Imagens responsivas por padrão */
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove list-style padrão */
+ul, ol {
+  list-style: none;
+}
